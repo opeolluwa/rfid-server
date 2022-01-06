@@ -1,7 +1,5 @@
 const _ = require('lodash')
-const jwt = require("jsonwebtoken")
-const meta_data = require("./../config/server.config")
-
+const jwt = require("./../utils/jwt")
 
 module.exports = {
     //parse admin data and validate
@@ -34,8 +32,8 @@ module.exports = {
         //fetch data from pay load
         const { email, password } = req.body
         //!use_email
-        if ((!email) || (!email_validator.validate(email))) { return res.status(400).send({ message: "invalid mail or password" }) }
-        if (!password) { return res.status(400).send({ message: _.capitalize("invalid email or password") }) }
+        if ((!username) || (!email_validator.validate(email))) { return res.status(400).send({ message: "invalid username or password" }) }
+        if (!password) { return res.status(400).send({ message: _.capitalize("username email or password") }) }
         next();
     },
 
