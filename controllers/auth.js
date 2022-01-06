@@ -19,7 +19,7 @@ function register(req, res) {
 
             //add user if not exist
             if (!rows[0]) {
-                database.promise().query("INSERT INTO auth (id, username, password)  VALUES (?,?,?)", [uuidv4(),  username, hash_password(password)])
+                database.promise().query("INSERT INTO auth (id, username, password)  VALUES (?,?,?)", [uuidv4(), username, hash_password(password)])
                     .then(([rows, fields]) => {
                         return res.send({ message: username + " successfully added" })
                     })
@@ -54,15 +54,15 @@ function login(req, res) {
             //if user is found,  validate data then return data and access token
             if (rows[0]) {
                 //data retrieved from database
-                const { id, password : hash, username,  } = rows[0];
+                const { id, password: hash, username, } = rows[0];
 
                 //compare req.body.user_password with stored hash
                 if (compare_hash(password, hash)) {
-                    const jwt_token = jwt({ id, username, firstname })
+                    const jwt_token = jwt.sign({ id, username})
                     return res.send({ id, username, jwt_token })
                 }
                 //if data does not match
-                if (!compare_hash(user_password, password)) {
+                if (!compare_hash(password, hash)) {
                     return res.send({ error: "Invalid email or password" })
                 }
             }
@@ -78,4 +78,4 @@ function login(req, res) {
 
 
 //export class 
-module.exports = {register, login}
+module.exports = { register, login }
