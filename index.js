@@ -17,7 +17,7 @@ app.use("/auth", auth)
 
 // create the connection test
 app.get("/", (req, res) => {
-    res.send("Ignition started")
+    res.send("Ignition started, sand sinking")
 })
 
 
