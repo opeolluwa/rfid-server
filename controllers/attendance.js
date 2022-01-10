@@ -1,7 +1,7 @@
 // load in dependencies
 const database = require("../config/db.config")
 const jwt = require("./../utils/jwt")
-
+const _ = require("lodash")
 function mobile_endpoint(req, res, next) {
 
     const { week } = req.body;
@@ -15,12 +15,31 @@ function mobile_endpoint(req, res, next) {
         })
 }
 
-//hardware endpoint, takes card id, send information
+//hardware endpoint, takes card id, send error or success message
 function hardware_endpoint(req, res, next) {
-    //get card id
+    //get card id 02db2534
     const { card_id } = req.body;
-    database.promise()
-        .query("SELECT * FROM ")
+    database
+        .promise()
+        .query("SELECT * FROM student_information WHERE LOWER(student_id) = ?", [card_id])
+        .then((rows, fields) => {
+            //if student with that id is not found rerturn not found error
+            if (!rows[0]) {
+                return res.send({ error: true, message: `Invald ID, Student with ${card_id} does not exist!` })
+            }
+            //TODO: record attendance and send feedback
+            else {
+                //get student data message then send back to 
+                const student_data = rows[0][0]
+                return res.send({ error: false, message: `Attendance recorded for ${card_id}`, student_data })
+            }
+        })
+        .catch((error) => {
+            res
+                .status(500)
+                .send({ error: true, message: "internal error, please retry" })
+        })
+    // next();
 }
 
 module.exports = { mobile_endpoint, hardware_endpoint }
