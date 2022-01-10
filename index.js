@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 5000
 const app = express()
 const cors = require('cors')
 
+
 //routes
 const auth = require('./routes/auth')
 const attendance = require("./routes/attendance")
