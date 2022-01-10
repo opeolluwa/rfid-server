@@ -1,23 +1,24 @@
-//get current unix time in milliseconds
-let timestamp = Date.now();
-
-//get current unix time stamp
-console.log(timestamp)
-
-//one week = 604800000 ms
-timestamp += 604800000;
-
-//parse time to human readable date
-const now = new Date(timestamp)
-
-/*
-* store local time string
-* 1 week = 604800 seconds
-* test conver unix timestamp to date in js 
-* if now + 1 week, mark for this week, els calculate the week and exec it
+/* get the current time stamp
+* get the stored timestamp 
+* parse the week
+* return a number representing the week
 */
+function week_parser() {
+    //get current unix time in milliseconds
+    let current_timestamp = Date.now();
+
+    //store a reference timestamp
+    let reference_timestamp = 1641826829758;
+
+    //week in milliseconds
+    const week = 604800000;
+
+    //compute the number of weeks form this week stored as one
+    return Math.round((current_timestamp - reference_timestamp) / week) + 1
+}
 
 
-// let unix time = 1641821607030
-
+let now = week_parser();
 console.log(now)
+
+module.exports = { week_parser }
