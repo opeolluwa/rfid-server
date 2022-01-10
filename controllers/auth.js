@@ -59,7 +59,7 @@ function login(req, res) {
                 //compare req.body.user_password with stored hash
                 if (compare_hash(password, hash)) {
                     const jwt_token = jwt.sign({ id, username})
-                    return res.send({ id, username, jwt_token })
+                    return res.send({ id, username, token: jwt_token })
                 }
                 //if data does not match
                 if (!compare_hash(password, hash)) {
