@@ -18,7 +18,8 @@ module.exports = {
     },
 
     //validate hardware login
-    validate_hardware_login() {
+    validate_hardware_login(req, res, next) {
+        //get card id from payload, return eror if none is provided 
         const { card_id } = req.body;
         if (!card_id) {
             res.send({ message: _.capitalize("unauthorized! please provide a valid id") })
