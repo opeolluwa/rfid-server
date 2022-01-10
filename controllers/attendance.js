@@ -21,7 +21,7 @@ function hardware_endpoint(req, res, next) {
     const { card_id } = req.body;
     database
         .promise()
-        .query("SELECT * FROM student_information WHERE LOWER(student_id) = ?", [card_id])
+        .query("SELECT * FROM rfid_student_information WHERE LOWER(student_id) = ?", [card_id])
         .then((rows, fields) => {
             //if student with that id is not found rerturn not found error
             if (!rows[0]) {
