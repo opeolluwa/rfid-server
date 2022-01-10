@@ -48,7 +48,7 @@ function login(req, res) {
 
     //check if user exists
     database.promise()
-        .query("SELECT * FROM auth WHERE LOWER(username) =?", [username])
+        .query("SELECT * FROM rfid_auth WHERE LOWER(username) =?", [username])
         .then(([rows, fields]) => {
 
             //if user is found,  validate data then return data and access token
