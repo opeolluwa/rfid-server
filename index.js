@@ -23,5 +23,5 @@ app.get("/", (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(`API listening on port ${PORT}`)
+    console.log(`API listening on port ${PORT}, current time stamp is ${Date.now()}`)
 });
