@@ -19,7 +19,7 @@ module.exports = {
 
     //validate hardware login
     validate_hardware_login(req, res, next) {
-        //get card id from payload, return eror if none is provided 
+        //get card id from payload, return error if none is provided 
         const { card_id } = req.body;
         if (!card_id) {
             res.send({ message: _.capitalize("unauthorized! please provide a valid id") })
@@ -45,13 +45,17 @@ module.exports = {
             //get payload headers
             const auth_headers = req.headers["authorization"] || req.headers["Authorization"];
             //check if not undefined
-            if (typeof auth_headers !== 'undefined') {
+            if (typeof auth_headers === 'undefined') {
+                res.status(403).send("forbidden!")
+            }
+            else {
                 const jwt = auth_headers.split(" ")[1]
                 //pass it to next controller or middleware
                 req.token = { jwt };
                 // return res.send(jwt)
                 next();
             }
+
         } catch (error) {
             //if no auth headers is found send forbidden
             res.status(403).send({ message: _.capitalize("forbidden!") })
