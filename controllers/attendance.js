@@ -1,17 +1,26 @@
 // load in dependencies
 const database = require("../config/db.config")
 const jwt = require("./../utils/jwt")
-const _ = require("lodash")
+const _ = require("lodash");
+//week parser, returns the number of week
+const { week_parser } = require("../utils/time-parser");
+
+
+
 function mobile_endpoint(req, res, next) {
 
     const { week } = req.body;
     //TODO: get data based on week from database and end()
     database.promise()
-        .query(" SELECT * FROM student_information")
+        //create data from student name, matric number and student email 
+        .query(`SELECT rfid_student_information.student_first_name, rfid_student_information.student_last_name, rfid_student_information.student_email, rfid_student_information.matric_number, rfid_student_information.last_seen, rfid_attendance.week_${week}  FROM rfid_student_information INNER JOIN rfid_attendance ON rfid_student_information.student_id=rfid_attendance.student_id`)
         .then(([rows, fields]) => {
 
             //send back the week and the data required 
             return res.send({ message: { rows, week } })
+        })
+        .catch((error) => {
+            res.send({ error: "internal server error" })
         })
 }
 
@@ -23,9 +32,9 @@ function hardware_endpoint(req, res, next) {
         .promise()
         .query("SELECT * FROM rfid_student_information WHERE LOWER(student_id) = ?", [card_id])
         .then((rows, fields) => {
-            //if student with that id is not found rerturn not found error
+            //if student with that id is not found return not found error
             if (!rows[0]) {
-                return res.send({ error: true, message: `Invald ID, Student with ${card_id} does not exist!` })
+                return res.send({ error: true, message: `Invalid ID, Student with ${card_id} does not exist!` })
             }
             //TODO: record attendance and send feedback
             else {
