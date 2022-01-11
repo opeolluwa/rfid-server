@@ -13,7 +13,7 @@ function mobile_endpoint(req, res, next) {
     //TODO: get data based on week from database and end()
     database.promise()
         //create data from student name, matric number and student email 
-        .query(`SELECT rfid_student_information.student_first_name, rfid_student_information.student_last_name, rfid_student_information.student_email, rfid_student_information.matric_number, rfid_student_information.last_seen, rfid_attendance.week_${week}  FROM rfid_student_information INNER JOIN rfid_attendance ON rfid_student_information.student_id=rfid_attendance.student_id`)
+        .query(`SELECT rfid_student_information.student_first_name, rfid_student_information.student_last_name, rfid_student_information.student_email, rfid_student_information.matric_number, rfid_attendance.last_seen, rfid_attendance.week_${week}  FROM rfid_student_information INNER JOIN rfid_attendance ON rfid_student_information.student_id=rfid_attendance.student_id`)
         .then(([rows, fields]) => {
 
             //send back the week and the data required 
@@ -36,11 +36,17 @@ function hardware_endpoint(req, res, next) {
             if (!rows[0]) {
                 return res.send({ error: true, message: `Invalid ID, Student with ${card_id} does not exist!` })
             }
-            //TODO: record attendance and send feedback
+
             else {
-                //get student data message then send back to 
-                const student_data = rows[0][0]
-                return res.send({ error: false, message: `Attendance recorded for ${card_id}`, student_data })
+                //mark student attendance and return status to hardware 
+                database
+                    //todo add last seen
+                    .promise()
+                    .query(`UPDATE rfid_attendance SET week_${week_parser()} = ${week_parser()}, last_seen = now()  WHERE lower(student_id) = ?`, [card_id, card_id])
+                    .then((rows, fields) => {
+                        const student_data = rows[0];
+                        return res.send({ error: false, message: `Attendance recorded for ${card_id}`, student_data })
+                    })
             }
         })
         .catch((error) => {
