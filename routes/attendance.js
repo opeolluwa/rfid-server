@@ -8,7 +8,7 @@ const { validate_auth_token, decode_jwt, validate_hardware_login } = require('..
 router.use(cors())
 
 /*validate auth headers, verify token then give access to resource*/
-router.get('/mobile', validate_auth_token, decode_jwt, mobile_endpoint) //mobile end point
+router.post('/mobile', validate_auth_token, decode_jwt, mobile_endpoint) //mobile end point
 
 
 /*validate POSTed data, the respond success or error*/
