@@ -18,7 +18,7 @@ app.use("/auth", auth)
 
 // create the connection test
 app.get("/", (req, res) => {
-    res.send("Ignition started, sand sinking")
+    res.send("Ignition started: RFID server running")
 })
 
 
