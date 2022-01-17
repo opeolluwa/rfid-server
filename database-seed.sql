@@ -16,32 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `User`
---
-
-DROP TABLE IF EXISTS `User`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `User` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `User`
---
-
-LOCK TABLES `User` WRITE;
-/*!40000 ALTER TABLE `User` DISABLE KEYS */;
-/*!40000 ALTER TABLE `User` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `rfid_attendance`
 --
 
@@ -62,7 +36,7 @@ CREATE TABLE `rfid_attendance` (
   `week_10` tinyint DEFAULT '0',
   `week_11` tinyint DEFAULT '0',
   `week_12` tinyint DEFAULT '0',
-  `last_seen` datetime CURRENT_TIMESTAMP,
+  `last_seen` datetime DEFAULT NULL,
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -73,7 +47,7 @@ CREATE TABLE `rfid_attendance` (
 
 LOCK TABLES `rfid_attendance` WRITE;
 /*!40000 ALTER TABLE `rfid_attendance` DISABLE KEYS */;
-INSERT INTO `rfid_attendance` VALUES ('02db2534',0,0,0,0,0,0,0,0,0,0,0,0,'2022-01-11 02:58:54'),('2af3723b',0,0,0,0,0,0,0,0,0,0,0,0,'2022-01-11 02:58:54'),('3afc5459',0,0,0,0,0,0,0,0,0,0,0,0,'2022-01-11 02:58:54'),('d741e019',0,0,0,0,0,0,0,0,0,0,0,0,'2022-01-11 02:58:54'),('fa834758',0,0,0,0,0,0,0,0,0,0,0,0,'2022-01-11 02:58:54');
+INSERT INTO `rfid_attendance` VALUES ('02db2534',1,1,1,1,1,1,1,1,1,0,0,0,NULL),('2af3723b',1,1,0,0,1,1,1,1,1,0,0,0,'2022-01-11 03:57:58'),('3afc5459',1,1,1,1,1,1,1,1,1,0,0,0,NULL),('d741e019',0,1,0,1,1,1,1,1,1,0,0,0,NULL),('fa834758',0,1,1,0,1,1,1,0,1,0,0,0,NULL);
 /*!40000 ALTER TABLE `rfid_attendance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +121,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-11  3:22:57
+-- Dump completed on 2022-01-17 11:53:20
