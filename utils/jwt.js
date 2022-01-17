@@ -5,7 +5,7 @@ require('dotenv').config(); //load in evn variable
 
 const jwt = {
     // take payload, genetate token, it expires in six hour
-    sign: (payload) => json_web_token.sign(payload, process.env.JWT_KEY, { expiresIn: '1h' }),
+    sign: (payload) => json_web_token.sign(payload, process.env.JWT_KEY, { expiresIn: '6h' }),
     // take payload, verify token
     verify: (payload) => {
         try {
