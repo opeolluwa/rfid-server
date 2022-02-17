@@ -8,8 +8,9 @@ function week_parser() {
     let current_timestamp = Date.now();
 
     //store a reference timestamp
-    let reference_timestamp = 1641826829758;
-
+    let reference_timestamp = 1641826829758 - 2433600000;
+    //1636498800000
+    // 1645086946282
     //week in milliseconds
     const week = 604800000;
 

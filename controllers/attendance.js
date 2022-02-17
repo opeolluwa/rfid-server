@@ -42,7 +42,7 @@ function hardware_endpoint(req, res, next) {
                 database
                     //todo add last seen
                     .promise()
-                    .query(`UPDATE rfid_attendance SET week_${week_parser()} = ${week_parser()}, last_seen = now()  WHERE lower(student_id) = ?`, [card_id, card_id])
+                    .query(`UPDATE rfid_attendance SET week_${week_parser()} = ${week_parser() > 0 ? 1 : 0}, last_seen = now()  WHERE lower(student_id) = ?`, [card_id, card_id])
                     .then((rows, fields) => {
                         const student_data = rows[0];
                         return res.send({ error: false, message: `Attendance recorded for ${card_id}`, student_data })
