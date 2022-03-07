@@ -10,7 +10,7 @@ const database = mysql.createConnection({
 })
 
 
-//init database trasaction
+//init database transaction
 database.connect(err => {
     if (err) console.error('error connecting: ' + err.stack);
     console.log('connected as id ' + database.threadId);
