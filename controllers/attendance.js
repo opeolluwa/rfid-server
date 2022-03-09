@@ -31,10 +31,10 @@ function hardware_endpoint(req, res, next) {
     database
         .promise()
         .query("SELECT * FROM rfid_student_information WHERE LOWER(student_id) = ?", [card_id])
-        .then((rows, fields) => {
+        .then(([rows, fields]) => {
             //if student with that id is not found return not found error
             if (!rows[0]) {
-                return res.send({ error: true, message: `Invalid ID, Student with ${card_id} does not exist!` })
+                return res.send({ error: true, message: `invalid id` })
             }
 
             else {
@@ -42,10 +42,10 @@ function hardware_endpoint(req, res, next) {
                 database
                     //todo add last seen
                     .promise()
-                    .query(`UPDATE rfid_attendance SET week_${week_parser()} = ${week_parser() > 0 ? 1 : 0}, last_seen = now()  WHERE lower(student_id) = ?`, [card_id, card_id])
-                    .then((rows, fields) => {
+                    .query(`UPDATE rfid_attendance SET week_${week_parser()} = ${week_parser() > 0 ? 1 : 0}, last_seen = now()  WHERE lower(student_id) = ?`, [card_id])
+                    .then(([rows, fields]) => {
                         const student_data = rows[0];
-                        return res.send({ error: false, message: `Attendance recorded for ${card_id}, week ${week_parser()}`, student_data })
+                        return res.send({ error: false, message: `recorded` })
                     })
             }
         })
